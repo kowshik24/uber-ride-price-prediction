@@ -1,0 +1,7 @@
+pandas
+numpy
+scikit-learn
+FastAPI
+uvicorn
+geopy==2.4.1
+xgboost==2.0.3

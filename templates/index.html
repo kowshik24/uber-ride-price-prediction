@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uber Ride Price Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url("static/uber.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #edf3ee;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+        input[type="text"],
+        input[type="datetime-local"],
+        input[type="submit"],
+        button {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"],
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #0056b3;
+        }
+        #predictionResult {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: rgb(255, 255, 255);
+        }
+    </style>
+</head>
+<body>
+    <h1>Uber Ride Price Prediction</h1>
+    <form id="predictionForm">
+        <label for="pickup_datetime">Pickup Datetime:</label>
+        <input type="datetime-local" id="pickup_datetime" name="pickup_datetime">
+
+        <label for="pickup_longitude">Pickup Longitude:</label>
+        <input type="text" id="pickup_longitude" name="pickup_longitude">
+
+        <label for="pickup_latitude">Pickup Latitude:</label>
+        <input type="text" id="pickup_latitude" name="pickup_latitude">
+
+        <label for="dropoff_longitude">Dropoff Longitude:</label>
+        <input type="text" id="dropoff_longitude" name="dropoff_longitude">
+
+        <label for="dropoff_latitude">Dropoff Latitude:</label>
+        <input type="text" id="dropoff_latitude" name="dropoff_latitude">
+
+        <label for="passenger_count">Passenger Count:</label>
+        <input type="text" id="passenger_count" name="passenger_count">
+
+        <input type="submit" value="Submit">
+    </form>
+    <div id="predictionResult"></div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevents form from submitting traditionally
+
+            var formData = new FormData(this);
+            
+            fetch('/prediction', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                document.getElementById('predictionResult').innerText = 'Estimated Price: $' + data.prediction.toFixed(2);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
