@@ -33,6 +33,52 @@ A web application that predicts the price of an Uber ride based on several facto
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+
+## UberRidePrediction
+
+A Python module for Uber Ride Prediction
+
+### Installation
+To install `UberRidePrediction`, you can use pip:
+
+```
+pip install UberRidePrediction
+```
+
+### Usage:
+
+#### Make Prediction:
+
+```
+from UberRidePrediction import PredictionPipeline
+prediction_pipeline = PredictionPipeline()
+prediction_pipeline.load_model()
+
+# For example this is your data:
+
+pickup_datetime = '2012-04-21 08:30:00'
+pickup_longitude = -73.987130
+pickup_latitude = 40.732029
+dropoff_longitude = -73.991875
+dropoff_latitude = 40.74942
+passenger_count = 1
+prediction = prediction_pipeline.make_single_prediction(pickup_datetime, pickup_longitude, pickup_latitude, dropoff_longitude, dropoff_latitude, passenger_count)
+print(prediction)
+
+```
+#### Train Model:
+
+```
+from UberRidePrediction import TrainingPipeline
+
+trainer_pipeline = TrainingPipeline()
+
+file_path = 'data.csv'
+
+trainer_pipeline.train_model(file_path)
+
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
